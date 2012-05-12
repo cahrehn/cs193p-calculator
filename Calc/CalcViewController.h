@@ -10,4 +10,8 @@
 
 @interface CalcViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UILabel *display;
+@property (weak, nonatomic) IBOutlet UILabel *calculationHistoryDisplay;	
+@property (weak, nonatomic) IBOutlet UILabel *displayVariablesUsedInProgram;
+
 @end
