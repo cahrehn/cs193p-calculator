@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="nB0-kC-gQ1">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
         <development defaultVersion="4200" identifier="xcode"/>
@@ -12,7 +12,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
                 <viewController id="2" customClass="CalcViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3">
-                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="30" id="cSS-w2-Lsy">
@@ -474,6 +474,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="PUm-uA-UPV"/>
                     <connections>
                         <outlet property="calculationHistoryDisplay" destination="E5W-sZ-D6G" id="e8i-Tt-dYs"/>
                         <outlet property="display" destination="cSS-w2-Lsy" id="7dq-n0-NHj"/>
@@ -481,7 +482,25 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="154" y="226"/>
+            <point key="canvasLocation" x="680" y="226"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="6zh-XP-ZMW">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="F01-Fp-wzR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController id="nB0-kC-gQ1" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="G6u-ty-T6u">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="2" kind="relationship" relationship="rootViewController" id="UkN-e1-QQa"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="222" y="226"/>
         </scene>
     </scenes>
     <classes>

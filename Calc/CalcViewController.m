@@ -40,7 +40,7 @@
     id result = [CalculatorBrain runProgram:self.brain.program
                         usingVariableValues:[self testVariableValues]];
     if([result isKindOfClass:[NSNumber class]]) {
-        self.display.text = [NSString stringWithFormat:@"%g", result];
+        self.display.text = [NSString stringWithFormat:@"%g", [result doubleValue]];
     }
     else if([result isKindOfClass:[NSString class]]) {
         self.display.text = [NSString stringWithFormat:@"%@", result];   
