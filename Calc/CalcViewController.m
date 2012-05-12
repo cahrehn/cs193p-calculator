@@ -57,21 +57,6 @@
     self.calculationHistoryDisplay.text = [CalculatorBrain descriptionOfProgram:self.brain.program];
 }
 
-- (void)updateInfoDisplay {
-    self.displayVariablesUsedInProgram.text = @"";
-    NSSet *variablesUsedInProgram = [CalculatorBrain variablesUsedInProgram:self.brain.program];
-    NSString *variable;
-    NSString *variableAndValue;
-    for(variable in variablesUsedInProgram) {
-        if([[self testVariableValues] objectForKey:variable]) {
-            variableAndValue = [NSString stringWithFormat:@"%@ = %@    ", variable, [[self testVariableValues] objectForKey:variable]];
-            self.displayVariablesUsedInProgram.text =
-                [self.displayVariablesUsedInProgram.text stringByAppendingString:variableAndValue];
-        }
-    }
-    [self updateHistoryDisplay];
-}
-
 
 - (IBAction)makeDecimal:(UIButton *)sender {
     
@@ -88,7 +73,7 @@
         [self enterPressed];
     }
     [self.brain pushProgramElement:sender.currentTitle];
-    [self updateInfoDisplay];
+    [self updateHistoryDisplay];
 }
 
 
@@ -155,7 +140,7 @@
     else {
         [self.brain popOperand];
         [self updateDisplay];
-        [self updateInfoDisplay];        
+        [self updateHistoryDisplay];        
     }
 }
 
@@ -164,7 +149,7 @@
     self.display.text = @"0";
     self.userIsInTheMiddleOfEnteringANumber = NO;
     [self.brain clearMemory];
-    [self updateInfoDisplay];
+    [self updateHistoryDisplay];
 }
 
 - (IBAction)setTestVariableValuesFromButton:(UIButton *)sender {
@@ -180,7 +165,7 @@
         self.testVariableValues = [NSDictionary dictionaryWithObjectsAndKeys:
                                    @"2", @"x", @"-3", @"a", @"3", @"b", nil];
     }
-    [self updateInfoDisplay];
+    [self updateHistoryDisplay];
     [self updateDisplay];
 }
 
