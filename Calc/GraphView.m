@@ -7,14 +7,14 @@
 //
 
 #import "GraphView.h"
+#import "AxesDrawer.h"
 
 @implementation GraphView
 
 @synthesize scale = _scale;
 @synthesize origin = _origin;
 
-#define DEFAULT_SCALE  0.90
-#define DEFAULT_ORIGIN 0.00
+#define DEFAULT_SCALE  20
 
 - (CGFloat)scale
 {
@@ -52,13 +52,16 @@
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
+
 - (void)drawRect:(CGRect)rect
 {
-    // Drawing code
+   
+    CGPoint midPoint; // center of our bounds in our coordinate system
+    midPoint.x = self.bounds.origin.x + self.bounds.size.width/2;
+    midPoint.y = self.bounds.origin.y + self.bounds.size.height/2;
+    [AxesDrawer drawAxesInRect:rect originAtPoint:midPoint scale:self.scale]; 
+     
 }
-*/
+
 
 @end
