@@ -8,6 +8,7 @@
 
 #import "CalcViewController.h"
 #import "CalculatorBrain.h"
+#import "GraphViewController.h"
 
 @interface CalcViewController ()
 
@@ -152,6 +153,7 @@
     [self updateHistoryDisplay];
 }
 
+
 - (IBAction)setTestVariableValuesFromButton:(UIButton *)sender {
     
     if([sender.currentTitle isEqualToString:@"Test 1"]) {
@@ -167,6 +169,18 @@
     }
     [self updateHistoryDisplay];
     [self updateDisplay];
+}
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:@"ShowGraph"]) {
+        [segue.destinationViewController setFunctions:self.brain.program];
+    }
+}
+
+
+- (IBAction)graphTheFunction {
+    [self performSegueWithIdentifier:@"ShowGraph" sender:self];
 }
 
 @end
