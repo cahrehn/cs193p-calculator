@@ -11,12 +11,16 @@
 @class GraphView;
 
 @protocol GraphViewDataSource
-- (NSArray *)pointsForGraphView:(GraphView *)sender;
+- (NSArray *)pointsForGraphView:(GraphView *)sender
+                         inRect:(CGRect)bounds
+              forNumberOfPoints:(float)numberOfPoints
+                  originAtPoint:(CGPoint)axisOrigin
+                          scale:(CGFloat)pointsPerUnit;
 @end
 
 
 @interface GraphView : UIView
 @property (nonatomic) CGFloat scale;
 @property (nonatomic) CGPoint origin;
-
+@property (nonatomic, weak) IBOutlet id <GraphViewDataSource> dataSource;
 @end
