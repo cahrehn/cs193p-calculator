@@ -32,6 +32,21 @@
 
 -(void)setGraphView:(GraphView *)graphView {
     _graphView = graphView;
+    // enable pinch gestures in the GraphView using its pinch: handler
+    [self.graphView addGestureRecognizer:[[UIPinchGestureRecognizer alloc]
+                                          initWithTarget:self.graphView action:@selector
+                                          (pinch:)]];
+    // recognize a pan gesture and modify our Model
+    [self.graphView addGestureRecognizer:[[UIPanGestureRecognizer alloc]
+                                          initWithTarget:self.graphView action:@selector
+                                          (pan:)]];
+    // recognize a triple tap gesture
+    UITapGestureRecognizer *moveOrigin = [[UITapGestureRecognizer alloc]
+                                          initWithTarget:self.graphView action:@selector
+                                          (moveOrigin:)];
+    moveOrigin.numberOfTapsRequired = 3;
+    [self.graphView addGestureRecognizer:moveOrigin];
+    
     self.graphView.dataSource = self;
 }
 

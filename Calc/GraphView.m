@@ -74,6 +74,35 @@
 }
 
 
+- (void)pinch:(UIPinchGestureRecognizer *)gesture
+{
+    if ((gesture.state == UIGestureRecognizerStateChanged) ||
+        (gesture.state == UIGestureRecognizerStateEnded)) {
+        self.scale *= gesture.scale; // adjust our scale
+        gesture.scale = 1;           // reset gestures scale to 1 (so future changes are incremental, not cumulative)
+    }
+}	
+
+
+- (void)pan:(UIPanGestureRecognizer *)gesture
+{
+    if ((gesture.state == UIGestureRecognizerStateChanged) ||
+        (gesture.state == UIGestureRecognizerStateEnded)) {
+        CGPoint translation = [gesture translationInView:self];
+        CGPoint newOrigin = self.origin;
+        newOrigin.x += translation.x;
+        newOrigin.y += translation.y;
+        self.origin = newOrigin;
+        [gesture setTranslation:CGPointZero inView:self];
+    }
+}
+
+
+- (void)moveOrigin:(UITapGestureRecognizer *)gesture {
+    self.origin = [gesture locationInView:gesture.view.superview];
+}
+
+
 - (void)drawRect:(CGRect)rect
 {
    
