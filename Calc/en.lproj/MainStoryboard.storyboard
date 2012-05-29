@@ -16,7 +16,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Graph" id="ORc-PX-IEO"/>
+                    <navigationItem key="navigationItem" title="Graph" id="ORc-PX-IEO">
+                        <barButtonItem key="rightBarButtonItem" title="Reorient" id="SEv-JR-0Hb">
+                            <connections>
+                                <action selector="reorient" destination="SK6-J0-upg" id="fDd-2s-oPs"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="graphView" destination="5Pa-Tc-FbT" id="TRY-D2-iXQ"/>
                         <outlet property="view" destination="5Pa-Tc-FbT" id="jit-V9-TFN"/>

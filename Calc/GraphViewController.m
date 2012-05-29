@@ -50,6 +50,14 @@
     self.graphView.dataSource = self;
 }
 
+- (IBAction)reorient {
+    [self.graphView setScale:20];
+    CGPoint originalOrigin;
+    originalOrigin.x = self.graphView.bounds.size.width/2;
+    originalOrigin.y = self.graphView.bounds.size.height/2;
+    [self.graphView setOrigin:originalOrigin];    
+    
+}
 
 -(NSArray *)pointsForGraphView:(GraphView *)sender
                         inRect:(CGRect)bounds

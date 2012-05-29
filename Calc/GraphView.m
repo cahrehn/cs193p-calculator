@@ -83,7 +83,8 @@
     }
 }	
 
-
+// Allows edge-to-edge panning
+// Panning past the edge simulates a zoom out pinch
 - (void)pan:(UIPanGestureRecognizer *)gesture
 {
     if ((gesture.state == UIGestureRecognizerStateChanged) ||
@@ -92,7 +93,15 @@
         CGPoint newOrigin = self.origin;
         newOrigin.x += translation.x;
         newOrigin.y += translation.y;
-        self.origin = newOrigin;
+        if(newOrigin.x > 0 && newOrigin.x < self.bounds.size.width &&
+           newOrigin.y > 0 && newOrigin.y < self.bounds.size.height) {
+            self.origin = newOrigin;
+        }
+        else {
+            float xScale = fabs(translation.x / self.bounds.size.width);
+            float yScale = fabs(translation.y / self.bounds.size.height);
+            self.scale *= (1 - (xScale + yScale) / 2);
+        }
         [gesture setTranslation:CGPointZero inView:self];
     }
 }
