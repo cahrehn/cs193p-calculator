@@ -46,10 +46,6 @@
     else if([result isKindOfClass:[NSString class]]) {
         self.display.text = [NSString stringWithFormat:@"%@", result];   
     }
-/*    double result = [CalculatorBrain runProgram:self.brain.program
-                            usingVariableValues:[self testVariableValues]];
- */
-    
 }
 
 
@@ -179,8 +175,35 @@
 }
 
 
+- (GraphViewController *)splitViewGraphViewController
+{
+    id hvc = [self.splitViewController.viewControllers lastObject];
+    if(![hvc isKindOfClass:[GraphViewController class]]) {
+        hvc = nil;
+    }
+    return hvc;
+}
+
+
+// if we have a splitViewController (iPad), set its functions to our Calculator Brain's program
+// otherwise (iPhone/iPod Touch), perform the ShowGraph segue
+
 - (IBAction)graphTheFunction {
-    [self performSegueWithIdentifier:@"ShowGraph" sender:self];
+    if([self splitViewGraphViewController]) {
+        [self splitViewGraphViewController].functions = self.brain.program;
+    }
+    else {
+        [self performSegueWithIdentifier:@"ShowGraph" sender:self];
+    }
+}
+
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        return YES;
+    else
+        return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 @end
