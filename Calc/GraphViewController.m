@@ -113,8 +113,15 @@
         
         NSString *xValue = [NSString stringWithFormat:@"%g", xStart + i];
         NSDictionary *variableValue = [NSDictionary dictionaryWithObjectsAndKeys:xValue, @"x", nil];
-        id result = [CalculatorBrain runProgram:self.functions
-                            usingVariableValues:variableValue];
+        id result;
+        
+        if([[CalculatorBrain variablesUsedInProgram:self.functions] count] > 0) {
+            result = [CalculatorBrain runProgram:self.functions
+                                usingVariableValues:variableValue];
+        }
+        else {
+            result = [CalculatorBrain runProgram:self.functions];
+        }
         if([result isKindOfClass:[NSNumber class]]) {
             graphPoint.y = origin.y - [result doubleValue] * pointsPerUnit;
         }
