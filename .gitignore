@@ -1,0 +1,12 @@
+build/*
+*.perspective
+*.perspectivev3
+*.pbxuser
+*.xcworkspace
+xcuserdata
+Snapshots
+
+.DS_Store
+*.swp
+*~.nib
+

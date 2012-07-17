@@ -8,6 +8,7 @@
 
 #import "CalcViewController.h"
 #import "CalculatorBrain.h"
+#import "GraphViewController.h"
 
 @interface CalcViewController ()
 
@@ -40,36 +41,17 @@
     id result = [CalculatorBrain runProgram:self.brain.program
                         usingVariableValues:[self testVariableValues]];
     if([result isKindOfClass:[NSNumber class]]) {
-        self.display.text = [NSString stringWithFormat:@"%g", result];
+        self.display.text = [NSString stringWithFormat:@"%g", [result doubleValue]];
     }
     else if([result isKindOfClass:[NSString class]]) {
         self.display.text = [NSString stringWithFormat:@"%@", result];   
     }
-/*    double result = [CalculatorBrain runProgram:self.brain.program
-                            usingVariableValues:[self testVariableValues]];
- */
-    
 }
 
 
 - (void)updateHistoryDisplay {
     
     self.calculationHistoryDisplay.text = [CalculatorBrain descriptionOfProgram:self.brain.program];
-}
-
-- (void)updateInfoDisplay {
-    self.displayVariablesUsedInProgram.text = @"";
-    NSSet *variablesUsedInProgram = [CalculatorBrain variablesUsedInProgram:self.brain.program];
-    NSString *variable;
-    NSString *variableAndValue;
-    for(variable in variablesUsedInProgram) {
-        if([[self testVariableValues] objectForKey:variable]) {
-            variableAndValue = [NSString stringWithFormat:@"%@ = %@    ", variable, [[self testVariableValues] objectForKey:variable]];
-            self.displayVariablesUsedInProgram.text =
-                [self.displayVariablesUsedInProgram.text stringByAppendingString:variableAndValue];
-        }
-    }
-    [self updateHistoryDisplay];
 }
 
 
@@ -88,7 +70,7 @@
         [self enterPressed];
     }
     [self.brain pushProgramElement:sender.currentTitle];
-    [self updateInfoDisplay];
+    [self updateHistoryDisplay];
 }
 
 
@@ -155,7 +137,7 @@
     else {
         [self.brain popOperand];
         [self updateDisplay];
-        [self updateInfoDisplay];        
+        [self updateHistoryDisplay];        
     }
 }
 
@@ -164,8 +146,9 @@
     self.display.text = @"0";
     self.userIsInTheMiddleOfEnteringANumber = NO;
     [self.brain clearMemory];
-    [self updateInfoDisplay];
+    [self updateHistoryDisplay];
 }
+
 
 - (IBAction)setTestVariableValuesFromButton:(UIButton *)sender {
     
@@ -180,8 +163,47 @@
         self.testVariableValues = [NSDictionary dictionaryWithObjectsAndKeys:
                                    @"2", @"x", @"-3", @"a", @"3", @"b", nil];
     }
-    [self updateInfoDisplay];
+    [self updateHistoryDisplay];
     [self updateDisplay];
+}
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:@"ShowGraph"]) {
+        [segue.destinationViewController setFunctions:self.brain.program];
+    }
+}
+
+
+- (GraphViewController *)splitViewGraphViewController
+{
+    id hvc = [self.splitViewController.viewControllers lastObject];
+    if(![hvc isKindOfClass:[GraphViewController class]]) {
+        hvc = nil;
+    }
+    return hvc;
+}
+
+
+// if we have a splitViewController (iPad), set its functions to our Calculator Brain's program
+// otherwise (iPhone/iPod Touch), perform the ShowGraph segue
+
+- (IBAction)graphTheFunction {
+    if([self splitViewGraphViewController]) {
+        [self splitViewGraphViewController].functions = self.brain.program;
+    }
+    else {
+        [self performSegueWithIdentifier:@"ShowGraph" sender:self];
+    }
+}
+
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        return YES;
+    else
+        return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 @end

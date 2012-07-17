@@ -141,10 +141,10 @@
             if([nextProgramElement isKindOfClass:[NSNumber class]]) {
                 operand = [nextProgramElement doubleValue];
                 if([operation isEqualToString:@"cos"]) {
-                    result = [NSNumber numberWithDouble:cos(operand * M_PI /180)];
+                    result = [NSNumber numberWithDouble:cos(operand)];
                 }
                 else if([operation isEqualToString:@"sin"]) {
-                    result = [NSNumber numberWithDouble:sin(operand * M_PI / 180)];
+                    result = [NSNumber numberWithDouble:sin(operand)];
                 }
                 else if([operation isEqualToString:@"sqrt"]) {
                     if(operand < 0) {
