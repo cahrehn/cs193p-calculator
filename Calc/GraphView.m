@@ -22,7 +22,13 @@
 - (CGFloat)scale
 {
     if (!_scale) {
-        return DEFAULT_SCALE; // don't allow zero scale
+        NSNumber *scaleNum = [[NSUserDefaults standardUserDefaults] objectForKey:@"scale"];
+        if(!scaleNum) {
+            return DEFAULT_SCALE; // don't allow zero scale
+        }
+        else {
+            return [scaleNum floatValue];
+        }
     } else {
         return _scale;
     }
@@ -32,6 +38,8 @@
 - (void)setScale:(CGFloat)scale {
     if (scale != _scale) {
         _scale = scale;
+        NSNumber *scaleNumber = [NSNumber numberWithFloat:scale];
+        [[NSUserDefaults standardUserDefaults] setObject:scaleNumber forKey:@"scale"];
         [self setNeedsDisplay]; // any time our scale changes, call for redraw
     }
 }
@@ -39,8 +47,17 @@
 
 -(CGPoint)origin {
     if(!_origin.x || !_origin.y) {
-        _origin.x = DEFAULT_ORIGIN_X;
-        _origin.y = DEFAULT_ORIGIN_Y;
+        NSNumber *originNumX = [[NSUserDefaults standardUserDefaults] objectForKey:@"originx"];
+        NSNumber *originNumY = [[NSUserDefaults standardUserDefaults] objectForKey:@"originy"];
+        
+        if(!originNumX || !originNumY) {
+            _origin.x = DEFAULT_ORIGIN_X;
+            _origin.y = DEFAULT_ORIGIN_Y;
+        }
+        else {
+            _origin.x = [originNumX floatValue];
+            _origin.y = [originNumY floatValue];
+        }
     }
     return _origin;
 }
@@ -49,6 +66,10 @@
 -(void)setOrigin:(CGPoint)origin {
     if(origin.x != _origin.x || origin.y != _origin.y) {
         _origin = origin;
+        NSNumber *originNumX = [NSNumber numberWithFloat:origin.x];
+        NSNumber *originNumY = [NSNumber numberWithFloat:origin.y];
+        [[NSUserDefaults standardUserDefaults] setObject:originNumX forKey:@"originx"];
+        [[NSUserDefaults standardUserDefaults] setObject:originNumY forKey:@"originy"];
         [self setNeedsDisplay];
     }
 }
